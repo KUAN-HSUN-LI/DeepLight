@@ -1,5 +1,8 @@
 from sklearn.utils import shuffle
 from PIL import Image
+import os
+from tqdm import tqdm
+import pickle
 
 
 def process_ball(ball_img):
@@ -13,7 +16,7 @@ def process_img(img):
 
 def get_files(Dir, fileNames):
     dataset = []
-    for fileName in fileNames:
+    for fileName in tqdm(fileNames):
         data = {}
 
         data['raw'] = process_img(Image.open(f"{Dir}/raw/{fileName}"))
@@ -36,3 +39,7 @@ def get_dataset():
 if __name__ == "__main__":
     DATASET_DIR = ["indoor", "outdoor"]
     dataset = get_dataset()
+    import pdb
+    pdb.set_trace()
+    with open("dataset.pkl", "wb") as f:
+        pickle.dump(dataset, f)
