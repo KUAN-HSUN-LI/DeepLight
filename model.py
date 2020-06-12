@@ -42,7 +42,8 @@ class DeepLight(nn.Module):
         self.upsample2 = UpSample(128, 64)
         self.upsample3 = UpSample(64, 32)
         self.relu6 = nn.ReLU6(inplace=True)
-        self.out = nn.Conv2d(32, 3, 3, 1, 1)
+        self.out = nn.Conv2d(32, 9, 3, 1, 1)
+        self.tanh = nn.Tanh()
 
     def forward(self, img):
         b, c, w, h = img.shape
@@ -57,7 +58,7 @@ class DeepLight(nn.Module):
         x = self.upsample1(x, output_size=(8, 8))
         x = self.upsample2(x, output_size=(16, 16))
         x = self.upsample3(x, output_size=(32, 32))
-        out = self.out(x)
+        out = self.tanh(self.out(x))
 
         return out
 

@@ -1,5 +1,4 @@
 from args import get_args
-from torch.utils.data import DataLoader
 from utils import *
 from dataset import DeepLightDataset
 from trainer import Trainer
@@ -17,5 +16,6 @@ if args.train:
     for epoch in range(EPOCHS):
         print(f"epoch{epoch}:")
         trainer.run_epoch(epoch, True)
+        trainer.save(f"model/model-{epoch}.pkl")
 else:
     ...
